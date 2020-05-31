@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">EasyNotes</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="facebook_app_id">823826178137063</string>
+    <string name="fb_login_protocol_scheme">fb823826178137063</string>
+    <string name="dialog_introduction_text"> What do you want to add? </string>
+    <string name="folder_name">Folder</string>
+    <string name="crossnote_name">Crossnote</string>
+    <string name="note_name">Note</string>
+    <string name="audio_name">Audio</string>
+    <string name="image_name">Image</string>
+    <string name="events_title">Events</string>
+    <string name="calendar_mon">MON</string>
+    <string name="calendar_tue">TUE</string>
+    <string name="calendar_wen">WEN</string>
+    <string name="calendar_thu">THU</string>
+    <string name="calendar_fri">FRI</string>
+    <string name="calendar_sat">SAT</string>
+    <string name="calendar_sun">SUN</string>
+</resources>

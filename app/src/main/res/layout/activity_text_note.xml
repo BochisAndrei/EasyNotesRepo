@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.TextNoteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/text_note_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#fff"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/sign_up_toolbar_btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_back3" />
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40dp"
+            android:background="@android:color/transparent"
+            android:hint="Title"
+            android:maxLength="30"
+            android:singleLine="true"
+            android:layout_weight ="1"
+            tools:layout_editor_absoluteX="70dp"
+            tools:layout_editor_absoluteY="16dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:padding="15dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:scrollbars="vertical"
+            android:capitalize="sentences"
+            android:shadowColor="#f000"
+            android:shadowDx="2.0"
+            android:shadowDy="2.0"
+            android:shadowRadius="4.0"
+            android:hint="dsdsdsdsssssssssdlksdksdjashjdsdsdsdsssssssssdlksdksdjasdsdsdsdsssssssssdlksdksdjashjdasjkdnjkasjksajdjksajdklasjdshjdasjkdnjkasjksajdjksajdklasjdsdasjkdnjkasjksajdjksajdklasjds"
+            android:textColorHighlight="#999"
+            android:textColorLink="@android:color/black"
+            android:textCursorDrawable="@android:color/black"
+            android:scrollHorizontally="false"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

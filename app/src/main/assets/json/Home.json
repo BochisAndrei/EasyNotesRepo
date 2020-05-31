@@ -1,0 +1,41 @@
+{
+  "class": "Folder",
+    "title": "HomeFolder",
+  "children": [
+      {
+          "class": "Folder",
+          "title": "Folder1",
+          "image": "R.drawable.background_night"
+      },
+      {
+          "class": "Folder",
+          "title": "Folder2",
+          "image": "R.drawable.background_night"
+      },
+      {
+          "class": "Folder",
+          "title": "Folder3",
+          "image": "R.drawable.background_night"
+      },
+      {
+          "class": "Folder",
+          "title": "Folder4",
+          "image": "R.drawable.background_night"
+      },
+      {
+          "class": "Folder",
+          "title": "Folder5",
+          "image": "R.drawable.background_night"
+      },
+      {
+          "class": "Folder",
+          "title": "Folder6",
+          "image": "R.drawable.background_night"
+      },
+      {
+          "class": "Folder",
+          "title": "Folder7",
+          "image": "R.drawable.background_night"
+      }
+    ]
+}
