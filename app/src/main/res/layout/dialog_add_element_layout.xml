@@ -6,47 +6,47 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/dialog_add_folder"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_margin="12dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/folder_name"
-        android:onClick="addFolder"
         android:background="@drawable/rounded_button"/>
 
     <Button
+        android:id="@+id/dialog_add_text_note"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_margin="12dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/note_name"
-        android:onClick="addTextNote"
         android:background="@drawable/rounded_button"/>
 
     <Button
+        android:id="@+id/dialog_add_cross_note"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_margin="12dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/crossnote_name"
-        android:onClick="addCrossNote"
         android:background="@drawable/rounded_button"/>
     <Button
+        android:id="@+id/dialog_add_audio"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_margin="12dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/audio_name"
-        android:onClick="addAudio"
         android:background="@drawable/rounded_button"/>
 
     <Button
+        android:id="@+id/dialog_add_image"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_margin="12dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/image_name"
-        android:onClick="addImage"
         android:background="@drawable/rounded_button"/>
 
 </LinearLayout>

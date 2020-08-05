@@ -23,46 +23,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="130dp"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/calendar_image"/>
+                    android:background="@drawable/calendar_image"
+                    android:elevation="10dp" />
 
                 <TextView
                     android:id="@+id/calendar_txtDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="210dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Year"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/great_vibes"
+                    android:text=" Year "
                     android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
+
                 <TextView
-                    android:id="@+id/calendar_txtDateDay"                       android:layout_width="wrap_content"
+                    android:id="@+id/calendar_txtDateDay"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/calendar_txtDate"
                     android:layout_marginStart="210dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_below="@+id/calendar_txtDate"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/great_vibes"
                     android:text="Day"
                     android:textColor="#000"
-                    android:textSize="50sp"
+                    android:textSize="60sp"
                     android:textStyle="bold" />
+
                 <ImageButton
                     android:id="@+id/calendar_btn_back"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/ic_calendar_back"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="60dp"
-                    />
+                    android:background="@drawable/ic_calendar_back"
+                    android:elevation="10dp" />
+
                 <ImageButton
                     android:id="@+id/calendar_btn_next"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="60dp"
                     android:layout_toEndOf="@+id/calendar_btn_back"
                     android:background="@drawable/ic_calendar_next"
-                    android:layout_marginTop="60dp"
-                    />
+                    android:elevation="10dp" />
 
             </RelativeLayout>
 
@@ -135,10 +144,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/great_vibes"
+                android:gravity="center_horizontal"
                 android:text="@string/events_title"
                 android:textColor="#000"
-                android:textSize="30sp"
+                android:textSize="36sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView

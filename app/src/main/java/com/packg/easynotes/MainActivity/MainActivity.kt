@@ -1,4 +1,4 @@
-package com.packg.easynotes.Activitys
+package com.packg.easynotes.MainActivity
 
 import android.app.Dialog
 import android.content.Context
@@ -18,12 +18,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.packg.easynotes.Activitys.Login_layout
+import com.packg.easynotes.Activitys.Settings_layout
+import com.packg.easynotes.Activitys.TextNoteActivity
 import com.packg.easynotes.Animations.RevealAnimation
 import com.packg.easynotes.DrawerFragments.*
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
-import com.packg.easynotes.SharedPArray.DataConfig
-import com.packg.easynotes.SharedPArray.PrefConfigNotesArray
 import com.packg.easynotes.Singleton.DocumentManager
 import com.packg.easynotes.User
 import com.squareup.picasso.Picasso
@@ -38,11 +39,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var toolbar : androidx.appcompat.widget.Toolbar
     private var sharedP = "SHARED_USER"
     lateinit var mRevealAnimation : RevealAnimation
-    lateinit var addElementDialog : Dialog
-    lateinit var addEventDialog : Dialog
     var TIME_DELAY = 2000
     var back_pressed = 0L
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Add the user and drawer to the app:
         val user = loadUser()
         setupDrawer(user)
-        //initialize the notes
-        initializeNotes()
 
         val authenticationBtn = navigationView.getHeaderView(0).findViewById<TextView>(
             R.id.drawer_authentication
@@ -100,33 +96,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         arrayList.add(corss)
         arrayList.add(folder1)
         return arrayList
-    }
-
-    //function to initialize notes that are show to the home screen
-    private fun initializeNotes() {
-        if(!PrefConfigNotesArray.arrayIsEmpty(this)) {
-            PrefConfigNotesArray.writeListInPref(this, testArray())
-            DocumentManager.getInstance().list = PrefConfigNotesArray.readListFromPref(this)
-            supportFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.container_fragment,
-                    FragmentHome()
-                )
-                .commit()
-        }else{
-
-        }
-    }
-    fun initializeEvents(){
-        if(!PrefConfigNotesArray.arrayEventIsEmpty(this))
-            DocumentManager.getInstance().events = PrefConfigNotesArray.readEventListFromPref(this)
-        else {
-            var event = Event(null,"title")
-            DocumentManager.getInstance().addEvent(event, this)
-            DocumentManager.getInstance().addEvent(event, this)
-        }
-
     }
 
     override fun onBackPressed() {
@@ -342,7 +311,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-
+/*
     fun showAddElementMenu(view: View) {
         //setting dialog for showing the add element menu
         addElementDialog = Dialog(this)
@@ -359,11 +328,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun addTextNote(view: View){
-        var note = TextNote(4,"Welcome","Welcome to EasyNotes, with us you can make your life simplier than ever before!")
-        var array = DataConfig.addElement(0, PrefConfigNotesArray.readListFromPref(this), note)
-        PrefConfigNotesArray.writeListInPref(this, array)
-        var accountSettingsIntent = Intent(this@MainActivity, MainActivity::class.java)
-        startActivity(accountSettingsIntent)
+        addElementDialog.dismiss()
+        val intent = Intent(this@MainActivity, TextNoteActivity::class.java)
+        startActivityForResult(intent, newTextNoteActivityRequestCode)
     }
 
     fun addFolder(view: View){
@@ -379,5 +346,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun addImage(view : View){
         addElementDialog.dismiss()
     }
-
+*/
 }

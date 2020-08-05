@@ -21,10 +21,7 @@ public class Audio extends Element {
     }
 
     public Audio(int id, String name){
-
-        this.id = id;
         this.name = name;
-        this.type = "Audio";
     }
 
 }

@@ -13,15 +13,17 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activitys.CrossNoteActivity"></activity>
         <activity android:name=".Activitys.TextNoteActivity">
+
+        </activity>
+        <activity
+            android:name=".Activitys.SplashActivity"
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".Activitys.SplashActivity"
-            android:theme="@style/SplashTheme">
 
         </activity>
         <activity android:name=".Activitys.WellcomeLayout" />
@@ -33,7 +35,7 @@
             android:name=".Activitys.Login_layout"
             android:theme="@style/AppThemeTransparent" />
         <activity
-            android:name=".Activitys.MainActivity"
+            android:name=".MainActivity.MainActivity"
             android:theme="@style/AppTheme.Transparent" />
 
         <meta-data

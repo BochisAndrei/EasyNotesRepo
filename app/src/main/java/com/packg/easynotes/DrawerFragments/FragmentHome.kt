@@ -1,25 +1,38 @@
 package com.packg.easynotes.DrawerFragments
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.packg.easynotes.Singleton.DocumentManager
-import com.packg.easynotes.Elements.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.packg.easynotes.Activitys.TextNoteActivity
+import com.packg.easynotes.Elements.TextNote
 import com.packg.easynotes.R
+import com.packg.easynotes.RoomDatabase.NoteViewModel
 
 
 class FragmentHome : Fragment() {
+
+    private lateinit var noteViewModel: NoteViewModel
+    private val newTextNoteActivityRequestCode = 1
+
 
     companion object {
 
         fun newInstance(): FragmentHome {
             return FragmentHome()
         }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -27,21 +40,46 @@ class FragmentHome : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view: View = inflater.inflate(R.layout.fragment_home, container,false)
-
-        var myFolderList = ArrayList<Element>()
-        var array = DocumentManager.getInstance().list
-
-        if(array!=null){
-            myFolderList = array
-        }
-
         val activity = activity as Context
 
+        val openDialog = view.findViewById<FloatingActionButton>(R.id.home_floating_button)
+
+        openDialog.setOnClickListener {
+            val dialog = ElementsDialogFragment()
+            dialog.setTargetFragment(this, newTextNoteActivityRequestCode)
+            fragmentManager?.let { it1 -> dialog.show(it1, "ElementsDialog") }
+        }
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.home_recycler_view)
-        var rvHomeAdapter = RVAdapterHome(activity, myFolderList)
+        var rvHomeAdapter = RVAdapterHome(activity)
         recyclerView.layoutManager = GridLayoutManager(activity, Utility.calculateNoOfColumns(activity, 200f))
         recyclerView.adapter = rvHomeAdapter
+
+        noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+
+        noteViewModel.allNotes.observe(this.viewLifecycleOwner, Observer { notes ->
+            // Update the cached copy of the notes in the adapter.
+            notes?.let { rvHomeAdapter.setNotes(it) }
+        })
+
         return view
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == newTextNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            data?.getStringExtra(TextNoteActivity.EXTRA_REPLY)?.let {
+                val word = TextNote(name=it, text = "Obiect de test")
+                noteViewModel.insert(word)
+            }
+        } else {
+            Toast.makeText(
+                activity,
+                "Not saved!",
+                Toast.LENGTH_LONG).show()
+        }
     }
 
     object Utility {
@@ -51,6 +89,5 @@ class FragmentHome : Fragment() {
             return (screenWidthDp / columnWidthDp + 0.5).toInt()
         }
     }
-
 
 }

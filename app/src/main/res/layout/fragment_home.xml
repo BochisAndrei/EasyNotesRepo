@@ -19,7 +19,6 @@
         android:backgroundTint="#FFF"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="showAddElementMenu"
         android:src="@drawable/ic_add_plus_button"
         app:backgroundTint="#FFF"
         app:elevation="10dp" />

@@ -13,10 +13,8 @@ public class Folder extends Element {
 
 
     public Folder(int id, String name, int image){
-        this.id = id;
         this.name = name;
         this.image = image;
-        this.type = "Folder";
     }
 
     public String getName() {

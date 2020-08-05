@@ -13,7 +13,9 @@ import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
 
 
-class RVAdapterHome(var context: Context, var arrayList: ArrayList<Element>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var arrayList = emptyList<Element>() // Cached copy of notes
 
     override fun getItemViewType(position: Int): Int {
         if(arrayList[position] is Folder)
@@ -67,6 +69,10 @@ class RVAdapterHome(var context: Context, var arrayList: ArrayList<Element>): Re
         return arrayList.size
     }
 
+    internal fun setNotes(notes: List<TextNote>) {
+        this.arrayList = notes
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
@@ -76,13 +82,6 @@ class RVAdapterHome(var context: Context, var arrayList: ArrayList<Element>): Re
                 type = arrayList[position] as Folder
                 (holder as FolderViewHolder)
                     .initializeUIComponents(type.name, type.image)
-                holder.cardView.setOnClickListener {
-                    arrayList.clear()
-                    var myFolderList = (type as Folder).getElementsList()
-                    DocumentManager.getInstance().currentFolderId = type.id
-                    arrayList.addAll(myFolderList)
-                    this.notifyDataSetChanged()
-                }
             }
             2 -> {// 2 is Crossnote Type
                 type = arrayList[position] as CrossNote

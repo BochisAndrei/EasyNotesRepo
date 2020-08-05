@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.MotionEventCompat
 import com.packg.easynotes.Animations.RevealAnimation
 import com.packg.easynotes.Animations.TypeWriter
+import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import java.util.*
 

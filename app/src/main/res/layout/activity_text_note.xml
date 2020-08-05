@@ -17,12 +17,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/sign_up_toolbar_btnBack"
+            android:id="@+id/text_note_activity_btnBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/icon_back3" />
 
         <EditText
+            android:id="@+id/text_note_activity_title"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_marginStart="40dp"
@@ -33,6 +34,13 @@
             android:layout_weight ="1"
             tools:layout_editor_absoluteX="70dp"
             tools:layout_editor_absoluteY="16dp" />
+        <ImageView
+            android:id="@+id/text_note_activity_btnSave"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="25dp"
+            android:src="@drawable/ic_save" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
@@ -45,6 +53,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
+            android:id="@+id/text_note_activity_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"

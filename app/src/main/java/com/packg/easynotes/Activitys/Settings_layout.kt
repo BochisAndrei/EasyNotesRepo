@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.Singleton.DocumentManager
 import com.squareup.picasso.Picasso

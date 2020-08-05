@@ -23,6 +23,7 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import kotlinx.android.synthetic.main.sign_up_layout.*
 
