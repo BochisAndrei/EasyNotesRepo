@@ -46,10 +46,6 @@ class FragmentCalendar : Fragment() {
         val activity = activity as Context
 
         var events = ArrayList<Event>()
-        var event1 = Event(null, "event1")
-        var event2 = Event(null, "event1")
-        events.add(event1)
-        events.add(event2)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.calendar_events_recyler_view)
         var rvCalendarAdapter = RVAdapterCalendar(activity, events)

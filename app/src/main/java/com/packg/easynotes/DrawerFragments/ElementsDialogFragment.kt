@@ -5,21 +5,26 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.format.DateUtils.getMonthString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.packg.easynotes.Activitys.CrossNoteActivity
 import com.packg.easynotes.Activitys.TextNoteActivity
-import com.packg.easynotes.Elements.TextNote
+import com.packg.easynotes.Elements.ExtraReply
 import com.packg.easynotes.R
-
 
 class ElementsDialogFragment : DialogFragment() {
 
-    private val newTextNoteActivityRequestCode = 1
+    private val newFolderActivityRequestCode = 1
+    private val newTextNoteActivityRequestCode = 2
+    private val newCrossNoteActivityRequestCode = 3
+    private val newAudioActivityRequestCode = 4
+    private val newImageActivityRequestCode = 5
+
+
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -37,16 +42,17 @@ class ElementsDialogFragment : DialogFragment() {
         val buttonImage = view.findViewById<Button>(R.id.dialog_add_image)
 
         buttonFolder.setOnClickListener(){
+
+        }
+
+        buttonTextNote.setOnClickListener(){
             val intent = Intent(activity, TextNoteActivity::class.java)
             startActivityForResult(intent, newTextNoteActivityRequestCode)
         }
 
-        buttonTextNote.setOnClickListener(){
-            dialog?.dismiss()
-        }
-
         buttonCrossNote.setOnClickListener(){
-            dialog?.dismiss()
+            val intent = Intent(activity, CrossNoteActivity::class.java)
+            startActivityForResult(intent, newCrossNoteActivityRequestCode)
         }
 
         buttonAudio.setOnClickListener(){
@@ -62,23 +68,47 @@ class ElementsDialogFragment : DialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == newTextNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(TextNoteActivity.EXTRA_REPLY)?.let {
-                //val word = TextNote(name=it, text = "")
-                val i: Intent = Intent()
-                    .putExtra(TextNoteActivity.EXTRA_REPLY, it)
-                targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, i)
-                dialog?.dismiss()
-            }
-        } else {
+        //case new Folder
+        if (requestCode == newFolderActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            val title = data?.getStringExtra(ExtraReply.REPLY_TITLE)
+            val description = data?.getStringExtra(ExtraReply.REPLY_DESCRIPTION)
+
+            val i: Intent = Intent()
+                .putExtra(ExtraReply.REPLY_TITLE, title)
+                .putExtra(ExtraReply.REPLY_DESCRIPTION, description)
+                .putExtra(ExtraReply.REPLY_TYPE, 1)
+            targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, i)
+            dialog?.dismiss()
+
+        }
+        //case new TextNote
+        else if (requestCode == newTextNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            val title = data?.getStringExtra(ExtraReply.REPLY_TITLE)
+            val description = data?.getStringExtra(ExtraReply.REPLY_DESCRIPTION)
+
+            val i: Intent = Intent()
+                .putExtra(ExtraReply.REPLY_TITLE, title)
+                .putExtra(ExtraReply.REPLY_DESCRIPTION, description)
+                .putExtra(ExtraReply.REPLY_TYPE, 2)
+            targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, i)
+            dialog?.dismiss()
+
+        }
+        //case new CrossNote
+        else if (requestCode == newCrossNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            val title = data?.getStringExtra(ExtraReply.REPLY_TITLE)
+            Toast.makeText(
+                activity,
+                "Saved " + title.toString(),
+                Toast.LENGTH_LONG).show()
+            dialog?.dismiss()
+        }
+        else {
             Toast.makeText(
                 activity,
                 "Not saved!",
                 Toast.LENGTH_LONG).show()
             dialog?.dismiss()
         }
-    }
-    companion object {
-        const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"
     }
 }

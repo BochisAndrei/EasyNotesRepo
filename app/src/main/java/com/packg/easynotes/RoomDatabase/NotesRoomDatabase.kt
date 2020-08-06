@@ -9,7 +9,7 @@ import com.packg.easynotes.Elements.TextNote
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(TextNote::class), version = 1, exportSchema = false)
+@Database(entities = [TextNote::class], version = 1, exportSchema = false)
 abstract class NotesRoomDatabase : RoomDatabase() {
 
     abstract fun textNoteDao(): TextNoteDao
@@ -18,26 +18,38 @@ abstract class NotesRoomDatabase : RoomDatabase() {
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.textNoteDao())
+                    populateDatabaseOnCreate(database.textNoteDao())
                 }
             }
         }
 
-        suspend fun populateDatabase(textNoteDao: TextNoteDao) {
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                    populateDatabaseOnOpen(database.textNoteDao())
+                }
+            }
+        }
+
+        suspend fun populateDatabaseOnCreate(textNoteDao: TextNoteDao) {
             // Delete all content here.
             textNoteDao.deleteAll()
-
             // Add sample words.
-            var note = TextNote(name = "First", text = "Description")
+            var note = TextNote(name = "Welcome", text = "With EasyNotes you can manage your life much easier!")
             textNoteDao.insert(note)
-            note = TextNote(name = "Second", text = "Description2")
-            textNoteDao.insert(note)
+        }
 
-            // TODO: Add your own words!
+        suspend fun populateDatabaseOnOpen(textNoteDao: TextNoteDao) {
+            // Delete all content here.
+            //textNoteDao.deleteAll()
+            // Add sample words.
+            //var note = TextNote(name = "Welcome", text = "With EasyNotes you can manage your life much easier!")
+            //textNoteDao.insert(note)
         }
     }
 

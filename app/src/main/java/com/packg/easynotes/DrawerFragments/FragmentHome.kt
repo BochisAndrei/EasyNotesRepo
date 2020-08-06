@@ -9,13 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.packg.easynotes.Activitys.TextNoteActivity
+import com.packg.easynotes.Elements.ExtraReply
 import com.packg.easynotes.Elements.TextNote
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
@@ -24,7 +23,7 @@ import com.packg.easynotes.RoomDatabase.NoteViewModel
 class FragmentHome : Fragment() {
 
     private lateinit var noteViewModel: NoteViewModel
-    private val newTextNoteActivityRequestCode = 1
+    private val dialogRequestCode = 1
 
 
     companion object {
@@ -46,7 +45,7 @@ class FragmentHome : Fragment() {
 
         openDialog.setOnClickListener {
             val dialog = ElementsDialogFragment()
-            dialog.setTargetFragment(this, newTextNoteActivityRequestCode)
+            dialog.setTargetFragment(this, dialogRequestCode)
             fragmentManager?.let { it1 -> dialog.show(it1, "ElementsDialog") }
         }
 
@@ -69,11 +68,15 @@ class FragmentHome : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == newTextNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(TextNoteActivity.EXTRA_REPLY)?.let {
-                val word = TextNote(name=it, text = "Obiect de test")
-                noteViewModel.insert(word)
-            }
+        if (requestCode == dialogRequestCode && resultCode == Activity.RESULT_OK) {
+            val title = data?.getStringExtra(ExtraReply.REPLY_TITLE)
+            val description = data?.getStringExtra(ExtraReply.REPLY_DESCRIPTION)
+            val note = TextNote(title!!, description!!)
+            noteViewModel.insert(note)
+            Toast.makeText(
+                activity,
+                "Saved!",
+                Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(
                 activity,

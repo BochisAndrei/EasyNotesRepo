@@ -45,8 +45,8 @@ class Settings_layout : AppCompatActivity() {
             .into(findViewById<ImageView>(R.id.account_settings_userImage))
 
         settings_layout_toolbar_btnBack.setOnClickListener {
-            var loginLayoutIntent = Intent(this@Settings_layout, MainActivity::class.java)
-            startActivity(loginLayoutIntent)
+            var intent = Intent(this@Settings_layout, MainActivity::class.java)
+            startActivity(intent)
             overridePendingTransition(
                 R.anim.slide_in_left,
                 R.anim.slide_out_right

@@ -79,25 +79,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
     }
-    private fun testArray(): ArrayList<Element> {
-        var note = TextNote(2,"Welcome","This is a Textnote!")
-        var note1 = Audio(3,"@drawable/bg_good_evening")
-        var corss = CrossNote(4, "CrossNote")
-        var arrayList2 = ArrayList<Element>()
-        arrayList2.add(note)
-        arrayList2.add(note)
-        var folder1 = Folder(1,"Folder1",
-            R.drawable.bg_good_evening
-        )
-        folder1.elementsList = arrayList2
-        var arrayList : ArrayList<Element> = ArrayList()
-        arrayList.add(note)
-        arrayList.add(note1)
-        arrayList.add(corss)
-        arrayList.add(folder1)
-        return arrayList
-    }
-
     override fun onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START)

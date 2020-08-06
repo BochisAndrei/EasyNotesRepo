@@ -31,7 +31,7 @@ class RVAdapterCalendar(var context: Context, var arrayList: ArrayList<Event>): 
         var type : Event
         type = arrayList[position]
         (holder as EventViewHolder)
-            .initializeUIComponents(type.eventText)
+            .initializeUIComponents(type.text)
     }
 
     //class for Folder card_view

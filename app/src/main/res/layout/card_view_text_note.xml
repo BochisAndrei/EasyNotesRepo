@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     xmlns:xmnls="http://schemas.android.com/apk/res-auto"
-    xmlns:cardView="http://schemas.android.com/tools"
     android:layout_margin="20dp"
     android:elevation="25dp"
     xmnls:cardBackgroundColor="#fff"
@@ -21,10 +21,11 @@
         <TextView
             android:id="@+id/card_view_text_note_content"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="168dp"
             android:layout_margin="5dp"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            />
+            android:paddingStart="5dp"
+            android:lineSpacingExtra="1sp"
+            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
         <TextView
             android:id="@+id/card_view_text_note_title"
