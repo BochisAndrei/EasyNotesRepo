@@ -8,12 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.packg.easynotes.Singleton.DocumentManager
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
 
 
-class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RVAdapterHome(var context: Context, var listener: OnItemClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var arrayList = emptyList<Element>() // Cached copy of notes
 
@@ -69,7 +68,7 @@ class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.Vie
         return arrayList.size
     }
 
-    internal fun setNotes(notes: List<TextNote>) {
+    internal fun setNotes(notes: List<Element>) {
         this.arrayList = notes
         notifyDataSetChanged()
     }
@@ -81,18 +80,27 @@ class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.Vie
             1 -> {// 1 is Folder Type
                 type = arrayList[position] as Folder
                 (holder as FolderViewHolder)
-                    .initializeUIComponents(type.name, type.image)
+                    .initializeUIComponents(type.name, 1)//add img type
+                holder.itemView.setOnClickListener{
+                    listener?.onItemClick(type)
+                }
             }
             2 -> {// 2 is Crossnote Type
                 type = arrayList[position] as CrossNote
                 (holder as CrossNoteViewHolder)
                     .initializeUIComponents(type.name)
+                holder.itemView.setOnClickListener{
+                    listener?.onItemClick(type)
+                }
 
             }
             3 -> {// 3 is TextNote Type
                 type = arrayList[position] as TextNote
                 (holder as TextNoteViewHolder)
                     .initializeUIComponents(type.name, type.text)
+                holder.itemView.setOnClickListener{
+                    listener?.onItemClick(type)
+                }
 
             }
             4 -> {// 4 is Audio Type
@@ -121,7 +129,7 @@ class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.Vie
             if(fName.length > 12)
                 name = fName.substring(0,12) + "..."
             folder_title.text = name
-            folder_image.setImageResource(fImage)
+            folder_image.setImageResource(R.drawable.background_night)
             cardView = itemView.findViewById(R.id.card_view_folder_id)
         }
     }
@@ -151,7 +159,6 @@ class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.Vie
                 name = fName.substring(0,12) + "..."
             text_note_title.text = name
             text_note_content.text = text
-
         }
     }
 
@@ -185,8 +192,12 @@ class RVAdapterHome(var context: Context): RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        abstract fun bind(item: T)
+    interface OnItemClickListener {
+        fun onItemClick(note: Element?)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
     }
 
 

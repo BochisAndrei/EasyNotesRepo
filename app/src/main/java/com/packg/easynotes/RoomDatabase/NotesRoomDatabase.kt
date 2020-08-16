@@ -5,16 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.packg.easynotes.Elements.CheckBoxNote
+import com.packg.easynotes.Elements.CrossNote
+import com.packg.easynotes.Elements.Folder
 import com.packg.easynotes.Elements.TextNote
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TextNote::class], version = 1, exportSchema = false)
+@Database(entities = [TextNote::class, CrossNote::class, Folder::class, CheckBoxNote::class], version = 2, exportSchema = false)
 abstract class NotesRoomDatabase : RoomDatabase() {
 
     abstract fun textNoteDao(): TextNoteDao
+    abstract fun crossNoteDao(): CrossNoteDao
+    abstract fun folderDao(): FolderDao
+    abstract fun checkBoxDao(): CheckBoxDao
 
-    private class WordDatabaseCallback(
+    private class NoteDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
@@ -31,7 +37,7 @@ abstract class NotesRoomDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabaseOnOpen(database.textNoteDao())
+                    populateDatabaseOnOpen(database.textNoteDao(), database.crossNoteDao(), database.folderDao())
                 }
             }
         }
@@ -44,9 +50,15 @@ abstract class NotesRoomDatabase : RoomDatabase() {
             textNoteDao.insert(note)
         }
 
-        suspend fun populateDatabaseOnOpen(textNoteDao: TextNoteDao) {
+        suspend fun populateDatabaseOnOpen(textNoteDao: TextNoteDao, crossNoteDao : CrossNoteDao, folderDao: FolderDao) {
             // Delete all content here.
             //textNoteDao.deleteAll()
+            //crossNoteDao.deleteAll()
+            //folderDao.deleteAll()
+            //var crossNote = CrossNote("SomeCrossNote")
+            //crossNoteDao.insert(crossNote)
+            //var folder = Folder("cevaFolder",1)
+            //folderDao.insert(folder)
             // Add sample words.
             //var note = TextNote(name = "Welcome", text = "With EasyNotes you can manage your life much easier!")
             //textNoteDao.insert(note)
@@ -70,7 +82,8 @@ abstract class NotesRoomDatabase : RoomDatabase() {
                     NotesRoomDatabase::class.java,
                     "notes_database"
                 )
-                    .addCallback(WordDatabaseCallback(scope))
+                    .addCallback(NoteDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 return instance

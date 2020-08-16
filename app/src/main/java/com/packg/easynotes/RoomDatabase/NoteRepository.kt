@@ -1,6 +1,8 @@
 package com.packg.easynotes.RoomDatabase
 
 import androidx.lifecycle.LiveData
+import com.packg.easynotes.Elements.CrossNote
+import com.packg.easynotes.Elements.Element
 import com.packg.easynotes.Elements.TextNote
 
 class NoteRepository(private val textNoteDao: TextNoteDao) {
@@ -11,6 +13,9 @@ class NoteRepository(private val textNoteDao: TextNoteDao) {
 
     suspend fun insert(note: TextNote) {
         textNoteDao.insert(note)
+    }
+    suspend fun update(note: TextNote) {
+        textNoteDao.update(note)
     }
 
 }

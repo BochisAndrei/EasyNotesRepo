@@ -11,4 +11,9 @@ class TextNote(@ColumnInfo(name = "name") val name : String,
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true) var id: Long = 0
 
+    @ColumnInfo(name = "trash")
+    var trash : Boolean = false
+
+    @ColumnInfo(name = "favorite")
+    var favorite : Boolean = false
 }

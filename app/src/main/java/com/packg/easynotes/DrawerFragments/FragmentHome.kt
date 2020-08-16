@@ -1,6 +1,5 @@
 package com.packg.easynotes.DrawerFragments
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,24 +13,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.packg.easynotes.Elements.ExtraReply
-import com.packg.easynotes.Elements.TextNote
+import com.packg.easynotes.Activitys.CrossNoteActivity
+import com.packg.easynotes.Activitys.TextNoteActivity
+import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
 
-
-class FragmentHome : Fragment() {
+class FragmentHome : Fragment(), RVAdapterHome.OnItemClickListener {
 
     private lateinit var noteViewModel: NoteViewModel
     private val dialogRequestCode = 1
 
-
     companion object {
-
         fun newInstance(): FragmentHome {
             return FragmentHome()
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -45,12 +41,11 @@ class FragmentHome : Fragment() {
 
         openDialog.setOnClickListener {
             val dialog = ElementsDialogFragment()
-            dialog.setTargetFragment(this, dialogRequestCode)
-            fragmentManager?.let { it1 -> dialog.show(it1, "ElementsDialog") }
+            dialog.show(requireActivity().supportFragmentManager, "ElementsDialog")
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.home_recycler_view)
-        var rvHomeAdapter = RVAdapterHome(activity)
+        var rvHomeAdapter = RVAdapterHome(activity, this)
         recyclerView.layoutManager = GridLayoutManager(activity, Utility.calculateNoOfColumns(activity, 200f))
         recyclerView.adapter = rvHomeAdapter
 
@@ -58,31 +53,20 @@ class FragmentHome : Fragment() {
 
         noteViewModel.allNotes.observe(this.viewLifecycleOwner, Observer { notes ->
             // Update the cached copy of the notes in the adapter.
-            notes?.let { rvHomeAdapter.setNotes(it) }
+            val list = RecyclerList.sortTextNote(notes)
+            rvHomeAdapter.setNotes(list)
         })
-
+        noteViewModel.allCrossNotes.observe(this.viewLifecycleOwner, Observer { notes ->
+            // Update the cached copy of the notes in the adapter.
+            val list = RecyclerList.sortCrossNote(notes)
+            rvHomeAdapter.setNotes(list)
+        })
+        noteViewModel.allFolderNotes.observe(this.viewLifecycleOwner, Observer { notes ->
+            // Update the cached copy of the notes in the adapter.
+            val list = RecyclerList.sortFolder(notes)
+            rvHomeAdapter.setNotes(list)
+        })
         return view
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == dialogRequestCode && resultCode == Activity.RESULT_OK) {
-            val title = data?.getStringExtra(ExtraReply.REPLY_TITLE)
-            val description = data?.getStringExtra(ExtraReply.REPLY_DESCRIPTION)
-            val note = TextNote(title!!, description!!)
-            noteViewModel.insert(note)
-            Toast.makeText(
-                activity,
-                "Saved!",
-                Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(
-                activity,
-                "Not saved!",
-                Toast.LENGTH_LONG).show()
-        }
     }
 
     object Utility {
@@ -92,5 +76,28 @@ class FragmentHome : Fragment() {
             return (screenWidthDp / columnWidthDp + 0.5).toInt()
         }
     }
+
+    override fun onItemClick(note: Element?) {
+        when (note) {
+            is TextNote -> {
+                val intent = Intent(activity, TextNoteActivity::class.java)
+                intent.putExtra(ExtraReply.REPLY_ID, note.id)
+                intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
+                intent.putExtra(ExtraReply.REPLY_DESCRIPTION, note.text)
+                startActivity(intent)
+            }
+            is Folder -> {
+                Toast.makeText(activity, "Folder clicked", Toast.LENGTH_SHORT).show()
+            }
+            is CrossNote -> {
+                val intent = Intent(activity, CrossNoteActivity::class.java)
+                intent.putExtra(ExtraReply.REPLY_ID, note.id)
+                intent.putExtra(ExtraReply.REPLY_TITLE,note.name)
+                startActivity(intent)
+                Toast.makeText(activity, "CrossNote clicked", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
 }

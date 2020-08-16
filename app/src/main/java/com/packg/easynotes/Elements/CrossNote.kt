@@ -8,7 +8,12 @@ import androidx.room.PrimaryKey
 class CrossNote(@ColumnInfo(name = "name") val name : String) : Element() {
 
     //TODO You need to add arrayList of CheckBoxes
-
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "cross_note_id")
     @PrimaryKey(autoGenerate = true) var id: Long = 0
+
+    @ColumnInfo(name = "trash")
+    var trash : Boolean = false
+
+    @ColumnInfo(name = "favorite")
+    var favorite : Boolean = false
 }
