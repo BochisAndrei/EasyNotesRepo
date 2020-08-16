@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_margin="10dp"
+    android:elevation="25dp"
+    xmlns:xmnls="http://schemas.android.com/apk/res-auto"
+    xmnls:cardCornerRadius="10dp"
+    android:layout_centerHorizontal="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_gravity="center_vertical"
+        android:paddingStart="5dp">
+
+        <CheckBox
+            android:id="@+id/checkbox_view_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:lines="1"/>
+        <EditText
+            android:id="@+id/checkbox_view_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Enter text..."
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:lines="1"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
