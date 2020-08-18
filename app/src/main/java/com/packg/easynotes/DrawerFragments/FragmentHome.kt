@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.packg.easynotes.Activitys.CrossNoteActivity
+import com.packg.easynotes.Activitys.OnItemClickListener
 import com.packg.easynotes.Activitys.TextNoteActivity
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
 
-class FragmentHome : Fragment(), RVAdapterHome.OnItemClickListener {
+class FragmentHome : Fragment(), OnItemClickListener {
 
     private lateinit var noteViewModel: NoteViewModel
     private val dialogRequestCode = 1
@@ -84,6 +85,7 @@ class FragmentHome : Fragment(), RVAdapterHome.OnItemClickListener {
                 intent.putExtra(ExtraReply.REPLY_ID, note.id)
                 intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
                 intent.putExtra(ExtraReply.REPLY_DESCRIPTION, note.text)
+                intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
                 startActivity(intent)
             }
             is Folder -> {
@@ -93,8 +95,8 @@ class FragmentHome : Fragment(), RVAdapterHome.OnItemClickListener {
                 val intent = Intent(activity, CrossNoteActivity::class.java)
                 intent.putExtra(ExtraReply.REPLY_ID, note.id)
                 intent.putExtra(ExtraReply.REPLY_TITLE,note.name)
+                intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
                 startActivity(intent)
-                Toast.makeText(activity, "CrossNote clicked", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.packg.easynotes.Elements.CheckBoxNote
 import com.packg.easynotes.Elements.CrossNote
@@ -12,7 +13,8 @@ import com.packg.easynotes.Elements.TextNote
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TextNote::class, CrossNote::class, Folder::class, CheckBoxNote::class], version = 2, exportSchema = false)
+@Database(entities = [TextNote::class, CrossNote::class, Folder::class, CheckBoxNote::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class NotesRoomDatabase : RoomDatabase() {
 
     abstract fun textNoteDao(): TextNoteDao

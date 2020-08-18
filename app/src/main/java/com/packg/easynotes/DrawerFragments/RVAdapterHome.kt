@@ -4,17 +4,20 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.packg.easynotes.Activitys.OnItemClickListener
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
-
+import com.packg.easynotes.RoomDatabase.NoteViewModel
 
 class RVAdapterHome(var context: Context, var listener: OnItemClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var arrayList = emptyList<Element>() // Cached copy of notes
+    private lateinit var noteViewModel: NoteViewModel
 
     override fun getItemViewType(position: Int): Int {
         if(arrayList[position] is Folder)
@@ -88,7 +91,7 @@ class RVAdapterHome(var context: Context, var listener: OnItemClickListener): Re
             2 -> {// 2 is Crossnote Type
                 type = arrayList[position] as CrossNote
                 (holder as CrossNoteViewHolder)
-                    .initializeUIComponents(type.name)
+                    .initializeUIComponents(type.name, type.checkBox1Name, type.checkBox1Checked, type.checkBox2Name, type.checkBox2Checked, type.checkBox3Name, type.checkBox3Checked, type.checkBox4Name, type.checkBox4Checked)
                 holder.itemView.setOnClickListener{
                     listener?.onItemClick(type)
                 }
@@ -138,12 +141,24 @@ class RVAdapterHome(var context: Context, var listener: OnItemClickListener): Re
     inner class CrossNoteViewHolder(myView: View) : RecyclerView.ViewHolder(myView){
 
         var crossnote_title = myView.findViewById<TextView>(R.id.card_view_cross_note_title)
+        var checkBox1 = myView.findViewById<CheckBox>(R.id.card_view_cross_note_checkBox1)
+        var checkBox2 = myView.findViewById<CheckBox>(R.id.card_view_cross_note_checkBox2)
+        var checkBox3 = myView.findViewById<CheckBox>(R.id.card_view_cross_note_checkBox3)
+        var checkBox4 = myView.findViewById<CheckBox>(R.id.card_view_cross_note_checkBox4)
 
-        fun initializeUIComponents(cName : String){
+        fun initializeUIComponents(cName : String, cb1_name: String, cb1_checked: Boolean, cb2_name: String, cb2_checked: Boolean, cb3_name: String, cb3_checked: Boolean, cb4_name: String, cb4_checked: Boolean){
             var name = cName
-            if(cName.length > 12)
-                name = cName.substring(0,12) + "..."
+            if(cName.length > 20)
+                name = cName.substring(0,20) + "..."
             crossnote_title.text = name
+            checkBox1.text = cb1_name
+            checkBox2.text = cb2_name
+            checkBox3.text = cb3_name
+            checkBox4.text = cb4_name
+            checkBox1.isChecked = cb1_checked
+            checkBox2.isChecked = cb2_checked
+            checkBox3.isChecked = cb3_checked
+            checkBox4.isChecked = cb4_checked
         }
     }
 
@@ -192,13 +207,7 @@ class RVAdapterHome(var context: Context, var listener: OnItemClickListener): Re
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(note: Element?)
-    }
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
 
 
 }

@@ -11,10 +11,13 @@ interface CheckBoxDao {
     suspend fun insert(checkBoxNote: CheckBoxNote)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(plants: List<CheckBoxNote>)
+    suspend fun insertAll(checkBoxNote: List<CheckBoxNote>)
 
     @Update
     suspend fun update(checkBoxNote: CheckBoxNote)
+
+    @Update
+    suspend fun updateAll(checkBoxNote: List<CheckBoxNote>)
 
     @Delete
     suspend fun delete(checkBoxNote: CheckBoxNote)
@@ -25,5 +28,7 @@ interface CheckBoxDao {
     @Query("DELETE FROM check_box_table")
     suspend fun deleteAll()
 
+    @Query("SELECT * from check_box_table WHERE parent_id=:id")
+    suspend fun getCheckBoxes(id: Long): List<CheckBoxNote>
 
 }

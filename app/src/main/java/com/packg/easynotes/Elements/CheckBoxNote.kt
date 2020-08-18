@@ -20,7 +20,7 @@ class CheckBoxNote (@ColumnInfo(name = "name") val name : String,
     @ColumnInfo(name = "checkbox_id")
     @PrimaryKey(autoGenerate = true) var id: Long = 0
 
-    @ColumnInfo(name = "parent_id")
+    @ColumnInfo(name = "parent_id", index = true)
     var parentId : Long = 0
 
 }

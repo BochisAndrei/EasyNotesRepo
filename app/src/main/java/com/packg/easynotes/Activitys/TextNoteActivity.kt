@@ -15,6 +15,7 @@ import com.packg.easynotes.Elements.TextNote
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
+import java.util.*
 
 class TextNoteActivity : AppCompatActivity() {
 
@@ -60,6 +61,8 @@ class TextNoteActivity : AppCompatActivity() {
                 val note = TextNote(titleText, descriptionText)
                 if(intentFrom.hasExtra(ExtraReply.REPLY_ID)){
                     note.id = intentFrom.getLongExtra(ExtraReply.REPLY_ID,1)
+                    note.createDate = Calendar.getInstance().apply { timeInMillis = intentFrom.getLongExtra(ExtraReply.REPLY_CREATED, 1) }
+                    note.editedDate = Calendar.getInstance()
                     noteViewModel.update(note)
                 }else{
                     noteViewModel.insert(note)

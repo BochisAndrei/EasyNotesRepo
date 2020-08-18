@@ -28,7 +28,4 @@ interface CrossNoteDao {
     @Query("SELECT * FROM cross_note_table")
     fun getCheckBoxes(): LiveData<List<CrossNoteWithCheckBoxes>>
 
-    @Transaction
-    @Query("SELECT * FROM cross_note_table WHERE cross_note_id=:id")
-    fun getCheckBoxes(id: Long): LiveData<List<CrossNoteWithCheckBoxes>>
 }
