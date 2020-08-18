@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:editable="false"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:lines="1"

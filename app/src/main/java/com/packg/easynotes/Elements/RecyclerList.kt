@@ -20,6 +20,16 @@ object RecyclerList {
         val returnList = concatenate(textNoteList, crossNoteList, folderNoteList)
         return sortList(returnList)
     }
+    fun sortTextNoteForAllNotes(textNoteList: List<TextNote>): List<Element> {
+        this.textNoteList = textNoteList
+        val returnList = concatenate(textNoteList, crossNoteList)
+        return sortList(returnList)
+    }
+    fun sortCrossNoteForAllNotes(crossNoteList : List<CrossNote>): List<Element> {
+        this.crossNoteList = crossNoteList
+        val returnList = concatenate(textNoteList, crossNoteList)
+        return sortList(returnList)
+    }
 
     fun sortList(list: List<Element>): List<Element>{
         return list.sortedBy { it.createDate }

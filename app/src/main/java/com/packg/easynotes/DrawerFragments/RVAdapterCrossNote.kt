@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.packg.easynotes.Elements.CheckBoxNote
-import com.packg.easynotes.Elements.Element
 import com.packg.easynotes.R
 
 
@@ -18,7 +17,7 @@ class RVAdapterCrossNote(var context: Context, var listener: OnCheckClickListene
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var view : View
 
-        view = LayoutInflater.from(context).inflate(R.layout.check_box_view, parent, false)
+        view = LayoutInflater.from(context).inflate(R.layout.card_view_check_box, parent, false)
         return CheckBoxViewHolder(view)
     }
 
@@ -45,9 +44,13 @@ class RVAdapterCrossNote(var context: Context, var listener: OnCheckClickListene
         type = arrayList[position]
         (holder as CheckBoxViewHolder)
             .initializeUIComponents(type.name, type.checked)
-        holder.check_box.setOnClickListener {
-            listener.onCheckClick(type, position)
+        holder.check_box.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked)
+                listener.onCheckClick(type, position, true)
+            else
+                listener.onCheckClick(type, position, false)
         }
+
     }
 
     //class for Folder card_view
@@ -66,6 +69,6 @@ class RVAdapterCrossNote(var context: Context, var listener: OnCheckClickListene
     }
 
     interface OnCheckClickListener {
-        fun onCheckClick(note: CheckBoxNote?, position: Int)
+        fun onCheckClick(note: CheckBoxNote?, position: Int, isChecked: Boolean)
     }
 }

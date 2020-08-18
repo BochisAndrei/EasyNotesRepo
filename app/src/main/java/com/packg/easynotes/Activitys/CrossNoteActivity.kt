@@ -1,16 +1,13 @@
 package com.packg.easynotes.Activitys
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,16 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.packg.easynotes.DrawerFragments.AddCheckBoxDialogFragment
+import com.packg.easynotes.DrawerFragments.FragmentAllNotes
+import com.packg.easynotes.DrawerFragments.FragmentHome
 import com.packg.easynotes.DrawerFragments.RVAdapterCrossNote
 import com.packg.easynotes.Elements.CheckBoxNote
 import com.packg.easynotes.Elements.CrossNote
 import com.packg.easynotes.Elements.ExtraReply
-import com.packg.easynotes.Elements.RecyclerList
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -102,8 +99,6 @@ class CrossNoteActivity : AppCompatActivity(), ISelectedData, RVAdapterCrossNote
         }
 
         buttonBack.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
             overridePendingTransition(
                 R.anim.slide_in_left,
                 R.anim.slide_out_right
@@ -187,10 +182,10 @@ class CrossNoteActivity : AppCompatActivity(), ISelectedData, RVAdapterCrossNote
         }
     }
 
-    override fun onCheckClick(note: CheckBoxNote?, position: Int) {
-        checkBoxList[position] = note!!
-        note?.let { noteViewModel.delete(it) }
-        rvCrossNoteAdapter.setNotes(checkBoxList)
+    override fun onCheckClick(note: CheckBoxNote?, position: Int, isChecked: Boolean) {
+        note!!.checked = isChecked
+        checkBoxList[position] = note
+        note.let { noteViewModel.delete(it) }
     }
 
 }

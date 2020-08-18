@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
     ]
 )
 class CheckBoxNote (@ColumnInfo(name = "name") val name : String,
-                    @ColumnInfo(name = "checked") val checked : Boolean){
+                    @ColumnInfo(name = "checked") var checked : Boolean){
 
     @ColumnInfo(name = "checkbox_id")
     @PrimaryKey(autoGenerate = true) var id: Long = 0

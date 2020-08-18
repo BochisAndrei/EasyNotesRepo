@@ -23,7 +23,6 @@ import com.packg.easynotes.RoomDatabase.NoteViewModel
 class FragmentHome : Fragment(), OnItemClickListener {
 
     private lateinit var noteViewModel: NoteViewModel
-    private val dialogRequestCode = 1
 
     companion object {
         fun newInstance(): FragmentHome {
