@@ -15,13 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.packg.easynotes.DrawerFragments.AddCheckBoxDialogFragment
-import com.packg.easynotes.DrawerFragments.FragmentAllNotes
-import com.packg.easynotes.DrawerFragments.FragmentHome
 import com.packg.easynotes.DrawerFragments.RVAdapterCrossNote
 import com.packg.easynotes.Elements.CheckBoxNote
 import com.packg.easynotes.Elements.CrossNote
 import com.packg.easynotes.Elements.ExtraReply
-import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
 import kotlinx.coroutines.launch
@@ -47,7 +44,7 @@ class CrossNoteActivity : AppCompatActivity(), ISelectedData, RVAdapterCrossNote
         val buttonBack = findViewById<ImageView>(R.id.cross_note_activity_btn_back)
         val dialogButton = findViewById<FloatingActionButton>(R.id.cross_note_activity_floating_button)
 
-        val intentFrom = intent
+        val intentFrom: Intent = intent
         if(intentFrom.hasExtra(ExtraReply.REPLY_ID)){
             title.setText(intentFrom.getStringExtra(ExtraReply.REPLY_TITLE))
             lifecycleScope.launch {
@@ -99,37 +96,11 @@ class CrossNoteActivity : AppCompatActivity(), ISelectedData, RVAdapterCrossNote
         }
 
         buttonBack.setOnClickListener {
-            overridePendingTransition(
-                R.anim.slide_in_left,
-                R.anim.slide_out_right
-            )
             finish()
         }
 
         buttonSave.setOnClickListener {
-            val replyIntent = Intent()
-            if (TextUtils.isEmpty(title.text)) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                val titleText = title.text.toString()
-                val note = CrossNote(titleText)
-                //add other info to the checkBox
-                addCheckBoxInfo(note)
-
-                if(intentFrom.hasExtra(ExtraReply.REPLY_ID)){
-                    note.id = intentFrom.getLongExtra(ExtraReply.REPLY_ID,1)
-                    note.createDate = Calendar.getInstance().apply { timeInMillis = intentFrom.getLongExtra(ExtraReply.REPLY_CREATED, 1) }
-                    note.editedDate = Calendar.getInstance()
-                    noteViewModel.update(note)
-                    noteViewModel.update(note.id, checkBoxList)
-                }else{
-                    noteViewModel.insert(note, checkBoxList)
-                }
-                Toast.makeText(
-                    this,
-                    "Saved!",
-                    Toast.LENGTH_SHORT).show()
-            }
+            saveData(intentFrom)
             finish()
         }
 
@@ -185,7 +156,34 @@ class CrossNoteActivity : AppCompatActivity(), ISelectedData, RVAdapterCrossNote
     override fun onCheckClick(note: CheckBoxNote?, position: Int, isChecked: Boolean) {
         note!!.checked = isChecked
         checkBoxList[position] = note
-        note.let { noteViewModel.delete(it) }
+    }
+
+    private fun saveData(intentFrom: Intent){
+        val replyIntent = Intent()
+        if (TextUtils.isEmpty(title.text)) {
+            setResult(Activity.RESULT_CANCELED, replyIntent)
+        } else {
+            val titleText = title.text.toString()
+            val note = CrossNote(titleText)
+            //add other info to the checkBox
+            addCheckBoxInfo(note)
+
+            if(intentFrom.hasExtra(ExtraReply.REPLY_ID)){
+                note.id = intentFrom.getLongExtra(ExtraReply.REPLY_ID,1)
+                note.createDate = Calendar.getInstance().apply { timeInMillis = intentFrom.getLongExtra(ExtraReply.REPLY_CREATED, 1) }
+                note.editedDate = Calendar.getInstance()
+                note.favorite = intentFrom.getBooleanExtra(ExtraReply.REPLY_FAVORITE, false)
+                note.trash = intentFrom.getBooleanExtra(ExtraReply.REPLY_TRASH, false)
+                noteViewModel.update(note)
+                noteViewModel.update(note.id, checkBoxList)
+            }else{
+                noteViewModel.insert(note, checkBoxList)
+            }
+            Toast.makeText(
+                this,
+                "Saved!",
+                Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

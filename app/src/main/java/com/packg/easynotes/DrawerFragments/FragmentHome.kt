@@ -19,6 +19,8 @@ import com.packg.easynotes.Activitys.TextNoteActivity
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FragmentHome : Fragment(), OnItemClickListener {
 
@@ -30,11 +32,13 @@ class FragmentHome : Fragment(), OnItemClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        val view: View = inflater.inflate(R.layout.fragment_home, container,false)
+        val view: View = inflater.inflate(R.layout.fragment_home, container, false)
         val activity = activity as Context
 
         val openDialog = view.findViewById<FloatingActionButton>(R.id.home_floating_button)
@@ -46,7 +50,8 @@ class FragmentHome : Fragment(), OnItemClickListener {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.home_recycler_view)
         var rvHomeAdapter = RVAdapterHome(activity, this)
-        recyclerView.layoutManager = GridLayoutManager(activity, Utility.calculateNoOfColumns(activity, 200f))
+        recyclerView.layoutManager =
+            GridLayoutManager(activity, Utility.calculateNoOfColumns(activity, 200f))
         recyclerView.adapter = rvHomeAdapter
 
         noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
@@ -84,6 +89,8 @@ class FragmentHome : Fragment(), OnItemClickListener {
                 intent.putExtra(ExtraReply.REPLY_ID, note.id)
                 intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
                 intent.putExtra(ExtraReply.REPLY_DESCRIPTION, note.text)
+                intent.putExtra(ExtraReply.REPLY_FAVORITE,note.favorite)
+                intent.putExtra(ExtraReply.REPLY_TRASH, note.trash)
                 intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
                 startActivity(intent)
             }
@@ -93,12 +100,52 @@ class FragmentHome : Fragment(), OnItemClickListener {
             is CrossNote -> {
                 val intent = Intent(activity, CrossNoteActivity::class.java)
                 intent.putExtra(ExtraReply.REPLY_ID, note.id)
-                intent.putExtra(ExtraReply.REPLY_TITLE,note.name)
+                intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
+                intent.putExtra(ExtraReply.REPLY_FAVORITE,note.favorite)
+                intent.putExtra(ExtraReply.REPLY_TRASH, note.trash)
                 intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
                 startActivity(intent)
             }
         }
     }
 
+    override fun onLongItemClick(note: Element?) {
+        val dialog = DialogFragmentElementDetails()
+        val calendar: Calendar = Calendar.getInstance()
+        val args = Bundle()
+        val dateformat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        when (note) {
+            is TextNote -> {
+                args.putString("type", "textnote")
+                args.putString("ID", note.id.toString())
+                calendar.timeInMillis = note?.createDate!!.timeInMillis
+                val createTime = dateformat.format(calendar.time)
+                args.putString("creation", createTime)
+                calendar.timeInMillis = note.editedDate.timeInMillis
+                val editedTime = dateformat.format(calendar.time)
+                args.putString("edited", editedTime)
+                args.putString("favorite", note.favorite.toString())
+                dialog.arguments = args
+                dialog.show(requireActivity().supportFragmentManager, "ElementsDialogDetails")
+            }
+            is Folder -> {
+                Toast.makeText(activity, "Folder long clicked", Toast.LENGTH_SHORT).show()
+            }
+            is CrossNote -> {
+                args.putString("type", "crossnote")
+                args.putString("ID", note.id.toString())
+                calendar.timeInMillis = note?.createDate!!.timeInMillis
+                val createTime = dateformat.format(calendar.time)
+                args.putString("creation", createTime)
+                calendar.timeInMillis = note.editedDate.timeInMillis
+                val editedTime = dateformat.format(calendar.time)
+                args.putString("edited", editedTime)
+                args.putString("favorite", note.favorite.toString())
+                dialog.arguments = args
+                dialog.show(requireActivity().supportFragmentManager, "ElementsDialogDetails")
+            }
+        }
+
+    }
 
 }

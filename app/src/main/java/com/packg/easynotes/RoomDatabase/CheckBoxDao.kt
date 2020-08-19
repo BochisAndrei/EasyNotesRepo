@@ -31,4 +31,5 @@ interface CheckBoxDao {
     @Query("SELECT * from check_box_table WHERE parent_id=:id")
     suspend fun getCheckBoxes(id: Long): List<CheckBoxNote>
 
+
 }

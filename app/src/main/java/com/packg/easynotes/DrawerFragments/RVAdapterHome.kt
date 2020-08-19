@@ -87,6 +87,10 @@ class RVAdapterHome(var context: Context, var listener: OnItemClickListener): Re
                 holder.itemView.setOnClickListener{
                     listener?.onItemClick(type)
                 }
+                holder.itemView.setOnLongClickListener {
+                    listener?.onLongItemClick(type)
+                    true
+                }
             }
             2 -> {// 2 is Crossnote Type
                 type = arrayList[position] as CrossNote
@@ -94,6 +98,10 @@ class RVAdapterHome(var context: Context, var listener: OnItemClickListener): Re
                     .initializeUIComponents(type.name, type.checkBox1Name, type.checkBox1Checked, type.checkBox2Name, type.checkBox2Checked, type.checkBox3Name, type.checkBox3Checked, type.checkBox4Name, type.checkBox4Checked)
                 holder.itemView.setOnClickListener{
                     listener?.onItemClick(type)
+                }
+                holder.itemView.setOnLongClickListener {
+                    listener?.onLongItemClick(type)
+                    true
                 }
 
             }
@@ -103,6 +111,10 @@ class RVAdapterHome(var context: Context, var listener: OnItemClickListener): Re
                     .initializeUIComponents(type.name, type.text)
                 holder.itemView.setOnClickListener{
                     listener?.onItemClick(type)
+                }
+                holder.itemView.setOnLongClickListener {
+                    listener?.onLongItemClick(type)
+                    true
                 }
 
             }

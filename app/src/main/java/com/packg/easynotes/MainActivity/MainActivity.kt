@@ -128,6 +128,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupDrawer(user : User){
         toolbar = findViewById(R.id.drawer_toolbar_toolbar)
         setSupportActionBar(toolbar)
+
         drawerLayout = findViewById(R.id.drawer)
         var header = LayoutInflater.from(this).inflate(R.layout.drawer_header_logged, null)
         var loggedLayout = header.findViewById<View>(R.id.drawer_logged)

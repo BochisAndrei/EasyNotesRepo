@@ -65,17 +65,25 @@ class FragmentAllNotes : Fragment(), OnItemClickListener {
                 intent.putExtra(ExtraReply.REPLY_ID, note.id)
                 intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
                 intent.putExtra(ExtraReply.REPLY_DESCRIPTION, note.text)
+                intent.putExtra(ExtraReply.REPLY_FAVORITE,note.favorite)
+                intent.putExtra(ExtraReply.REPLY_TRASH, note.trash)
                 intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
                 startActivity(intent)
             }
             is CrossNote -> {
                 val intent = Intent(activity, CrossNoteActivity::class.java)
                 intent.putExtra(ExtraReply.REPLY_ID, note.id)
-                intent.putExtra(ExtraReply.REPLY_TITLE,note.name)
+                intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
+                intent.putExtra(ExtraReply.REPLY_FAVORITE,note.favorite)
+                intent.putExtra(ExtraReply.REPLY_TRASH, note.trash)
                 intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onLongItemClick(note: Element?) {
+        TODO("Not yet implemented")
     }
 
 

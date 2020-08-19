@@ -18,8 +18,14 @@ interface CrossNoteDao {
     @Delete
     suspend fun delete(crossNote : CrossNote)
 
-    @Query("SELECT * from cross_note_table ORDER BY cross_note_id ASC")
+    @Query("SELECT * from cross_note_table WHERE trash = 0 ORDER BY cross_note_id ASC")
     fun getOrderedCrossNotes(): LiveData<List<CrossNote>>
+
+    @Query("SELECT * from cross_note_table WHERE favorite = 1 ORDER BY cross_note_id ASC")
+    fun getOrderedFavoriteCrossNotes(): LiveData<List<CrossNote>>
+
+    @Query("SELECT * from cross_note_table WHERE trash = 1 ORDER BY cross_note_id ASC")
+    fun getOrderedTrashedCrossNotes(): LiveData<List<CrossNote>>
 
     @Query("DELETE FROM cross_note_table")
     suspend fun deleteAll()
@@ -28,4 +34,9 @@ interface CrossNoteDao {
     @Query("SELECT * FROM cross_note_table")
     fun getCheckBoxes(): LiveData<List<CrossNoteWithCheckBoxes>>
 
+    @Query("UPDATE cross_note_table SET favorite = :favorite WHERE cross_note_id = :id")
+    fun updateFavorite(id: Long, favorite: Boolean?)
+
+    @Query("UPDATE cross_note_table SET trash = :trash WHERE cross_note_id = :id")
+    fun updateTrash(id: Long, trash: Boolean?)
 }

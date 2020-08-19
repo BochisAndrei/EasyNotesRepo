@@ -55,7 +55,7 @@ class ElementsDialogFragment : DialogFragment() {
             dialog?.dismiss()
         }
 
-        buttonImage.setOnClickListener(){
+        buttonImage.setOnClickListener{
             dialog?.dismiss()
         }
 

@@ -22,14 +22,22 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     val allNotes : LiveData<List<TextNote>>
     val allCrossNotes : LiveData<List<CrossNote>>
     val allFolderNotes : LiveData<List<Folder>>
+    val allFavoriteNotes : LiveData<List<TextNote>>
+    val allFavoriteCrossNotes : LiveData<List<CrossNote>>
+    val allTrashedNotes : LiveData<List<TextNote>>
+    val allTrashedCrossNotes : LiveData<List<CrossNote>>
 
     init {
         val notesDao = NotesRoomDatabase.getDatabase(application, viewModelScope).textNoteDao()
         repositoryNotes = NoteRepository(notesDao)
         allNotes = repositoryNotes.allNotes
+        allFavoriteNotes = repositoryNotes.allFavoriteNotes
+        allTrashedNotes = repositoryNotes.allTrashedNotes
         val crossNotesDao = NotesRoomDatabase.getDatabase(application, viewModelScope).crossNoteDao()
         repositoryCrossNotes = CrossNoteRepository(crossNotesDao)
         allCrossNotes = repositoryCrossNotes.allNotes
+        allFavoriteCrossNotes = repositoryCrossNotes.allFavoriteNotes
+        allTrashedCrossNotes = repositoryCrossNotes.allTrashedNotes
         val folderDao = NotesRoomDatabase.getDatabase(application, viewModelScope).folderDao()
         repositoryFolders = FolderRepository(folderDao)
         allFolderNotes = repositoryFolders.allNotes
@@ -46,11 +54,23 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun update(note: TextNote) = viewModelScope.launch(Dispatchers.IO) {
         repositoryNotes.update(note)
     }
+    fun updateFavoriteTextNote(id: Long, favorite: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repositoryNotes.updateFavorite(id, favorite)
+    }
+    fun updateTrashTextNote(id: Long, trash: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repositoryNotes.updateTrash(id, trash)
+    }
     fun insert(note: CrossNote) = viewModelScope.launch(Dispatchers.IO) {
         repositoryCrossNotes.insert(note)
     }
     fun update(note: CrossNote) = viewModelScope.launch(Dispatchers.IO) {
         repositoryCrossNotes.update(note)
+    }
+    fun updateFavoriteCrossNote(id: Long, favorite: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repositoryCrossNotes.updateFavorite(id, favorite)
+    }
+    fun updateTrashCrossNote(id: Long, trash: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repositoryCrossNotes.updateTrash(id, trash)
     }
     fun insert(note: Folder) = viewModelScope.launch(Dispatchers.IO) {
         repositoryFolders.insert(note)

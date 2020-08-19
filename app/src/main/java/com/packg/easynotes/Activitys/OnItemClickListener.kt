@@ -4,4 +4,5 @@ import com.packg.easynotes.Elements.Element
 
 interface OnItemClickListener {
     fun onItemClick(note: Element?)
+    fun onLongItemClick(note: Element?)
 }
