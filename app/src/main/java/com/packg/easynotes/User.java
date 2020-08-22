@@ -14,6 +14,10 @@ public class User {
         this.font = "normal";
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getImage() {
         return image;
     }

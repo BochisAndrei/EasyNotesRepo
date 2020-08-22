@@ -1,15 +1,18 @@
 package com.packg.easynotes.DrawerFragments
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.packg.easynotes.Elements.Event
+import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +32,10 @@ class FragmentCalendar : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view: View = inflater.inflate(R.layout.fragment_calendar, container,false)
-
+        (activity as MainActivity).toolbar.findViewById<TextView>(R.id.main_activity_toolbar_title).text = getString(
+                    R.string.FragmentCalendarTitle)
+        (activity as MainActivity).toolbar.findViewById<ImageView>(R.id.drawer_toolbar_search).visibility = View.VISIBLE
+        (activity as MainActivity).toolbar.setBackgroundColor(Color.WHITE)
 
         var rightNow = Calendar.getInstance()
         var dateformat = SimpleDateFormat("yyyy")

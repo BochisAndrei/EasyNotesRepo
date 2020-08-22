@@ -29,7 +29,7 @@
                 <item
                     android:id="@+id/nav_waterReminder"
                     android:icon="@drawable/ic_water"
-                    android:title="Water reminder" />
+                    android:title="Drink water"/>
                 <item
                     android:id="@+id/nav_trash"
                     android:icon="@drawable/ic_bin"

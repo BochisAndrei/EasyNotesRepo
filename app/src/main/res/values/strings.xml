@@ -18,4 +18,10 @@
     <string name="calendar_fri">FRI</string>
     <string name="calendar_sat">SAT</string>
     <string name="calendar_sun">SUN</string>
+    <string name="FragmentHomeTitle">EasyNotes</string>
+    <string name="FavoriteNotesTitle">Favorite Notes</string>
+    <string name="FragmentCalendarTitle">Calendar</string>
+    <string name="FragmentTrashTitle">Trash</string>
+    <string name="FragmentAllNotesTitle">All Notes</string>
+    <string name="WaterReminder">Drink water</string>
 </resources>

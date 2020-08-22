@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_water_reminder">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/drawer_toolbar_toolbar"
+        android:id="@+id/drawer_toolbar_water_reminder"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#fff"
+        android:layout_height="258dp"
+        android:background="@drawable/bg_water_reminder"
         android:elevation="4dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +31,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp">
                     <ImageView
-                        android:id="@+id/drawer_toolbar_search"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"

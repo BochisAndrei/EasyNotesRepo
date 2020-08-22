@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var toolbar : androidx.appcompat.widget.Toolbar
     private var sharedP = "SHARED_USER"
     lateinit var mRevealAnimation : RevealAnimation
+    lateinit var accountSettingsBtn: TextView
     var TIME_DELAY = 2000
     var back_pressed = 0L
 
@@ -56,9 +57,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val authenticationBtn = navigationView.getHeaderView(0).findViewById<TextView>(
             R.id.drawer_authentication
-        )
-        val accountSettingsBtn = navigationView.getHeaderView(0).findViewById<TextView>(
-            R.id.drawer_logged_accountSettings
         )
 
         // if account dosen't exist the login activity will open if clicked
@@ -128,7 +126,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupDrawer(user : User){
         toolbar = findViewById(R.id.drawer_toolbar_toolbar)
         setSupportActionBar(toolbar)
-
         drawerLayout = findViewById(R.id.drawer)
         var header = LayoutInflater.from(this).inflate(R.layout.drawer_header_logged, null)
         var loggedLayout = header.findViewById<View>(R.id.drawer_logged)
@@ -138,8 +135,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         var image = user.image
         //Font of the drawer:
-        if(!user.email.equals("") && !user.userName.equals(""))
-        if(user.getFont().equals("Normal")) {
+        if(user.email != "" && user.userName != "")
+        if(user.font == "Normall1") {
             navigationView.removeHeaderView(navigationView.getHeaderView(0))
             loggedLayout.findViewById<TextView>(R.id.drawer_logged_userName).text = user.userName
             Picasso.get()
@@ -147,20 +144,55 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .transform(CropCircleTransformation())
                 .into(loggedLayout.findViewById<ImageView>(R.id.drawer_logged_userImage))
             navigationView.addHeaderView(loggedLayout)
+            accountSettingsBtn = navigationView.getHeaderView(0).findViewById<TextView>(
+                R.id.drawer_logged_accountSettings
+            )
+
         }
-        else if(user.getFont().equals("Normal2")){
+        else if(user.font == "Normal2"){
+            header = LayoutInflater.from(this).inflate(R.layout.drawer_header_logged2, null)
+            loggedLayout = header.findViewById<View>(R.id.drawer_logged2)
+            navigationView.removeHeaderView(navigationView.getHeaderView(0))
+            loggedLayout.findViewById<TextView>(R.id.drawer_logged2_userName).text = user.userName
+            Picasso.get()
+                .load(image)
+                .transform(CropCircleTransformation())
+                .into(loggedLayout.findViewById<ImageView>(R.id.drawer_logged2_userImage))
+            navigationView.addHeaderView(loggedLayout)
+            accountSettingsBtn = navigationView.getHeaderView(0).findViewById<TextView>(
+                R.id.drawer_logged2_accountSettings
+            )
+
+        }
+        else if(user.font == "Normal3"){
+            header = LayoutInflater.from(this).inflate(R.layout.drawer_header_logged3, null)
+            loggedLayout = header.findViewById<View>(R.id.drawer_logged3)
+            navigationView.removeHeaderView(navigationView.getHeaderView(0))
+            loggedLayout.findViewById<TextView>(R.id.drawer_logged3_userName).text = user.userName
+            Picasso.get()
+                .load(image)
+                .transform(CropCircleTransformation())
+                .into(loggedLayout.findViewById<ImageView>(R.id.drawer_logged3_userImage))
+            navigationView.addHeaderView(loggedLayout)
+            accountSettingsBtn = navigationView.getHeaderView(0).findViewById<TextView>(
+                R.id.drawer_logged3_accountSettings
+            )
 
         }
         //default
         else{
             navigationView.removeHeaderView(navigationView.getHeaderView(0))
             loggedLayout.findViewById<TextView>(R.id.drawer_logged_userName).text = user.userName
-            if(!image.equals(""))
+            if(image != "")
             Picasso.get()
                 .load(image)
                 .transform(CropCircleTransformation())
                 .into(loggedLayout.findViewById<ImageView>(R.id.drawer_logged_userImage))
             navigationView.addHeaderView(loggedLayout)
+            accountSettingsBtn = navigationView.getHeaderView(0).findViewById(
+                R.id.drawer_logged_accountSettings
+            )
+
         }
 
         actionBarToggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, toolbar,
@@ -172,12 +204,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBarToggle.syncState()
     }
 
-    fun loadUser() : User {
+    private fun loadUser() : User {
         var sharedPreferences : SharedPreferences = getSharedPreferences(sharedP, Context.MODE_PRIVATE)
         var userName = sharedPreferences.getString("USERNAME", "")
         var email = sharedPreferences.getString("EMAIL", "")
         var img = sharedPreferences.getString("IMAGE","")
+        var font = sharedPreferences.getString("FONT", "")
         var user = User(userName, email, img)
+        user.font = font
         DocumentManager.getInstance().setUser(user)
         return DocumentManager.getInstance().user
     }
@@ -293,40 +327,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-/*
-    fun showAddElementMenu(view: View) {
-        //setting dialog for showing the add element menu
-        addElementDialog = Dialog(this)
-        addElementDialog.setContentView(R.layout.dialog_add_element_layout)
-        addElementDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        addElementDialog.show()
-    }
-    fun showAddEventMenu(view: View) {
-        //setting dialog for showing the add element menu
-        addEventDialog = Dialog(this)
-        addEventDialog.setContentView(R.layout.dialog_add_event_layout)
-        addEventDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        addEventDialog.show()
-    }
-
-    fun addTextNote(view: View){
-        addElementDialog.dismiss()
-        val intent = Intent(this@MainActivity, TextNoteActivity::class.java)
-        startActivityForResult(intent, newTextNoteActivityRequestCode)
-    }
-
-    fun addFolder(view: View){
-        addElementDialog.dismiss()
-    }
-
-    fun addCrossNote(view: View){
-        addElementDialog.dismiss()
-    }
-    fun addAudio(view : View){
-        addElementDialog.dismiss()
-    }
-    fun addImage(view : View){
-        addElementDialog.dismiss()
-    }
-*/
 }

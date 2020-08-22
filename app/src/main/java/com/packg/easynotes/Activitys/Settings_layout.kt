@@ -15,6 +15,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.packg.easynotes.DrawerFragments.DialogFragmentChangeName
+import com.packg.easynotes.DrawerFragments.DialogFragmentChangeNavHeader
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.Singleton.DocumentManager
@@ -22,10 +24,11 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.settings_layout.*
 
-class Settings_layout : AppCompatActivity() {
+class Settings_layout : AppCompatActivity(), ISelectedData {
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private var sharedP = "SHARED_USER"
+    lateinit var user_name: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +40,26 @@ class Settings_layout : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        var user_name = findViewById<TextView>(R.id.account_settings_user_name)
+        user_name = findViewById(R.id.account_settings_user_name)
         user_name.text = DocumentManager.getInstance().user.userName
         Picasso.get()
             .load(DocumentManager.getInstance().user.image)
             .transform(CropCircleTransformation())
             .into(findViewById<ImageView>(R.id.account_settings_userImage))
+
+        val openDialogChangeDrawer = findViewById<TextView>(R.id.settings_layout_change_drawer)
+        openDialogChangeDrawer.setOnClickListener {
+            var dialog = DialogFragmentChangeNavHeader()
+            dialog.show(supportFragmentManager, "Choose header style")
+        }
+
+        val openChangeName = findViewById<TextView>(R.id.settings_layout_change_name)
+        openChangeName.setOnClickListener {
+            var dialog = DialogFragmentChangeName()
+            dialog.addListener(this)
+            dialog.show(supportFragmentManager, "Change name")
+        }
+
 
         settings_layout_toolbar_btnBack.setOnClickListener {
             var intent = Intent(this@Settings_layout, MainActivity::class.java)
@@ -80,6 +97,10 @@ class Settings_layout : AppCompatActivity() {
         editor.commit()
         startActivity(Intent(this@Settings_layout, MainActivity::class.java))
         finish()
+    }
+
+    override fun onSelectedData(string: String?) {
+        this.user_name.text = string
     }
 
 }
