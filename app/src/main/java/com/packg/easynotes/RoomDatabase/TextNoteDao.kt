@@ -28,10 +28,9 @@ interface TextNoteDao {
     @Query("DELETE FROM text_note_table")
     suspend fun deleteAll()
 
-    @Query("UPDATE text_note_table SET favorite = :favorite WHERE id = :id")
+    @Query("UPDATE text_note_table SET favorite = :favorite WHERE id = :id AND trash = 0")
     fun updateFavorite(id: Long, favorite: Boolean?)
 
     @Query("UPDATE text_note_table SET trash = :trash WHERE id = :id")
     fun updateTrash(id: Long, trash: Boolean?)
-
 }
