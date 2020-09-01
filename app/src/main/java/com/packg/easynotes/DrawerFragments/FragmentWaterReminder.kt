@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.packg.easynotes.Activitys.ISelectedData
+import com.packg.easynotes.Dialogs.DialogFragmentChangeWaterLimit
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 
@@ -100,7 +101,8 @@ class FragmentWaterReminder : Fragment(), ISelectedData {
         }
 
         buttonChangeLimit.setOnClickListener {
-            var dialog = DialogFragmentChangeWaterLimit()
+            var dialog =
+                DialogFragmentChangeWaterLimit()
             dialog.addListener(this)
             dialog.show(requireActivity().supportFragmentManager, "Change limit dialog")
         }

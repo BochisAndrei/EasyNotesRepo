@@ -18,10 +18,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.packg.easynotes.Activitys.CrossNoteActivity
 import com.packg.easynotes.Activitys.OnItemClickListener
 import com.packg.easynotes.Activitys.TextNoteActivity
+import com.packg.easynotes.Dialogs.DialogFragmentElementDetails
+import com.packg.easynotes.Dialogs.DialogFragmentTrash
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FragmentTrash : Fragment(), OnItemClickListener {
 
@@ -68,32 +72,25 @@ class FragmentTrash : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(note: Element?) {
+        val dialog = DialogFragmentTrash()
+        val args = Bundle()
         when (note) {
             is TextNote -> {
-                val intent = Intent(activity, TextNoteActivity::class.java)
-                intent.putExtra(ExtraReply.REPLY_ID, note.id)
-                intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
-                intent.putExtra(ExtraReply.REPLY_DESCRIPTION, note.text)
-                intent.putExtra(ExtraReply.REPLY_FAVORITE,note.favorite)
-                intent.putExtra(ExtraReply.REPLY_TRASH, note.trash)
-                intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
-                startActivity(intent)
+                args.putString("type", "textnote")
+                args.putString("ID", note.id.toString())
+                dialog.arguments = args
+                dialog.show(requireActivity().supportFragmentManager, "TrashDialog")
             }
             is CrossNote -> {
-                val intent = Intent(activity, CrossNoteActivity::class.java)
-                intent.putExtra(ExtraReply.REPLY_ID, note.id)
-                intent.putExtra(ExtraReply.REPLY_TITLE, note.name)
-                intent.putExtra(ExtraReply.REPLY_FAVORITE,note.favorite)
-                intent.putExtra(ExtraReply.REPLY_TRASH, note.trash)
-                intent.putExtra(ExtraReply.REPLY_CREATED, note.createDate.timeInMillis)
-                startActivity(intent)
+                args.putString("type", "crossnote")
+                args.putString("ID", note.id.toString())
+                dialog.arguments = args
+                dialog.show(requireActivity().supportFragmentManager, "TrashDialog")
             }
         }
     }
 
     override fun onLongItemClick(note: Element?) {
-        TODO("Not yet implemented")
     }
-
 
 }

@@ -13,7 +13,7 @@ import com.packg.easynotes.Elements.TextNote
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TextNote::class, CrossNote::class, Folder::class, CheckBoxNote::class], version = 1, exportSchema = false)
+@Database(entities = [TextNote::class, CrossNote::class, Folder::class, CheckBoxNote::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class NotesRoomDatabase : RoomDatabase() {
 

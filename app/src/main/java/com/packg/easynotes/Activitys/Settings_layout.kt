@@ -15,8 +15,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.packg.easynotes.DrawerFragments.DialogFragmentChangeName
-import com.packg.easynotes.DrawerFragments.DialogFragmentChangeNavHeader
+import com.packg.easynotes.Dialogs.DialogFragmentChangeName
+import com.packg.easynotes.Dialogs.DialogFragmentChangeNavHeader
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.Singleton.DocumentManager
@@ -49,7 +49,8 @@ class Settings_layout : AppCompatActivity(), ISelectedData {
 
         val openDialogChangeDrawer = findViewById<TextView>(R.id.settings_layout_change_drawer)
         openDialogChangeDrawer.setOnClickListener {
-            var dialog = DialogFragmentChangeNavHeader()
+            var dialog =
+                DialogFragmentChangeNavHeader()
             dialog.show(supportFragmentManager, "Choose header style")
         }
 

@@ -24,4 +24,6 @@
     <string name="FragmentTrashTitle">Trash</string>
     <string name="FragmentAllNotesTitle">All Notes</string>
     <string name="WaterReminder">Drink water</string>
+    <string name="send_notes_back">Send Note Back</string>
+    <string name="remove_note">Remove Note</string>
 </resources>

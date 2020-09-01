@@ -19,7 +19,7 @@ interface TextNoteDao {
     @Query("SELECT * from text_note_table WHERE trash = 0 ORDER BY id ASC ")
     fun getOrderedNotes(): LiveData<List<TextNote>>
 
-    @Query("SELECT * from text_note_table WHERE favorite = 1 ORDER BY id ASC ")
+    @Query("SELECT * from text_note_table WHERE favorite = 1 AND trash = 0 ORDER BY id ASC ")
     fun getOrderedFavoriteNotes(): LiveData<List<TextNote>>
 
     @Query("SELECT * from text_note_table WHERE trash = 1 ORDER BY id ASC ")

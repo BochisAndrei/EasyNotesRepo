@@ -1,4 +1,4 @@
-package com.packg.easynotes.DrawerFragments
+package com.packg.easynotes.Dialogs
 
 import android.content.Context
 import android.graphics.Color

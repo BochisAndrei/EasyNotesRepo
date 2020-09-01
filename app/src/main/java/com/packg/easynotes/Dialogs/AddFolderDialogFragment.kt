@@ -1,4 +1,4 @@
-package com.packg.easynotes.DrawerFragments
+package com.packg.easynotes.Dialogs
 
 import android.app.Activity
 import android.content.Intent

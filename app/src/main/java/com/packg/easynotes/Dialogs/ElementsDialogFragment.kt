@@ -1,4 +1,4 @@
-package com.packg.easynotes.DrawerFragments
+package com.packg.easynotes.Dialogs
 
 import android.app.Activity
 import android.content.Intent
@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.packg.easynotes.Activitys.CrossNoteActivity
 import com.packg.easynotes.Activitys.TextNoteActivity
-import com.packg.easynotes.Elements.ExtraReply
 import com.packg.easynotes.R
 
 class ElementsDialogFragment : DialogFragment() {
@@ -36,7 +34,8 @@ class ElementsDialogFragment : DialogFragment() {
         val buttonImage = view.findViewById<Button>(R.id.dialog_add_image)
 
         buttonFolder.setOnClickListener(){
-            val dialogAddFolder = AddFolderDialogFragment()
+            val dialogAddFolder =
+                AddFolderDialogFragment()
             dialogAddFolder.setTargetFragment(this, activityRequestCode)
             fragmentManager?.let { it1 -> dialogAddFolder.show(it1, "AddFolderDialog") }
         }

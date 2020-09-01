@@ -26,7 +26,9 @@ class CheckBoxRepository(private val checkBoxDao: CheckBoxDao)  {
     suspend fun delete(note: CheckBoxNote){
         checkBoxDao.delete(note)
     }
-
+    suspend fun deleteWithId(id: Long){
+        checkBoxDao.deleteWithId(id)
+    }
     suspend fun getCheckBoxes(id: Long): List<CheckBoxNote> {
         return checkBoxDao.getCheckBoxes(id)
     }

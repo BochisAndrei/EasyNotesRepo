@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.packg.easynotes.DrawerFragments.AddCheckBoxDialogFragment
+import com.packg.easynotes.Dialogs.AddCheckBoxDialogFragment
 import com.packg.easynotes.DrawerFragments.RVAdapterCrossNote
 import com.packg.easynotes.Elements.CheckBoxNote
 import com.packg.easynotes.Elements.CrossNote
@@ -90,7 +90,8 @@ class CrossNoteActivity : AppCompatActivity(), ISelectedData, RVAdapterCrossNote
             }else{
                 bundle.putString("ID", "1")
             }
-            val checkBoxDialog = AddCheckBoxDialogFragment(this)
+            val checkBoxDialog =
+                AddCheckBoxDialogFragment(this)
             checkBoxDialog.arguments = bundle
             checkBoxDialog.show(supportFragmentManager, "CheckBox dialog")
         }

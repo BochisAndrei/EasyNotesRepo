@@ -19,9 +19,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.packg.easynotes.Activitys.CrossNoteActivity
-import com.packg.easynotes.Activitys.IOnFragmentChange
 import com.packg.easynotes.Activitys.OnItemClickListener
 import com.packg.easynotes.Activitys.TextNoteActivity
+import com.packg.easynotes.Dialogs.DialogFragmentElementDetails
+import com.packg.easynotes.Dialogs.ElementsDialogFragment
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R

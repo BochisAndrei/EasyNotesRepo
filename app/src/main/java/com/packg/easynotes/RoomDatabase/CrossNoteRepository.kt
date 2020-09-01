@@ -19,6 +19,9 @@ class CrossNoteRepository(private val crossNoteDao: CrossNoteDao) {
     suspend fun update(note: CrossNote){
         crossNoteDao.update(note)
     }
+    suspend fun delete(note: CrossNote){
+        crossNoteDao.delete(note)
+    }
     suspend fun updateFavorite(id: Long, favorite: Boolean){
         crossNoteDao.updateFavorite(id, favorite)
     }

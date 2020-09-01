@@ -26,5 +26,8 @@ class NoteRepository(private val textNoteDao: TextNoteDao) {
     suspend fun updateTrash(id: Long, trash: Boolean){
         textNoteDao.updateTrash(id, trash)
     }
+    suspend fun delete(note: TextNote){
+        textNoteDao.delete(note)
+    }
 
 }

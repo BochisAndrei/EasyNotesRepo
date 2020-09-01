@@ -28,6 +28,9 @@ interface CheckBoxDao {
     @Query("DELETE FROM check_box_table")
     suspend fun deleteAll()
 
+    @Query("DELETE FROM check_box_table WHERE parent_id = :id")
+    suspend fun deleteWithId(id: Long)
+
     @Query("SELECT * from check_box_table WHERE parent_id=:id")
     suspend fun getCheckBoxes(id: Long): List<CheckBoxNote>
 

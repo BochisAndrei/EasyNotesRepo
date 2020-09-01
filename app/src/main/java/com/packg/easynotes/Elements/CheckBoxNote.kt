@@ -10,7 +10,8 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = CrossNote::class,
             childColumns = ["parent_id"],
-            parentColumns = ["cross_note_id"]
+            parentColumns = ["cross_note_id"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )

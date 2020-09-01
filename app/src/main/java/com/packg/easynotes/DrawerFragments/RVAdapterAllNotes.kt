@@ -62,6 +62,10 @@ class RVAdapterAllNotes(var context: Context, var listener: OnItemClickListener)
                 holder.itemView.setOnClickListener{
                     listener?.onItemClick(type)
                 }
+                holder.itemView.setOnLongClickListener {
+                    listener?.onLongItemClick(type)
+                    true
+                }
 
             }
             3 -> {// 3 is TextNote Type
@@ -70,6 +74,10 @@ class RVAdapterAllNotes(var context: Context, var listener: OnItemClickListener)
                     .initializeUIComponents(type.name, type.text)
                 holder.itemView.setOnClickListener{
                     listener?.onItemClick(type)
+                }
+                holder.itemView.setOnLongClickListener {
+                    listener?.onLongItemClick(type)
+                    true
                 }
 
             }

@@ -60,6 +60,9 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun updateTrashTextNote(id: Long, trash: Boolean) = viewModelScope.launch(Dispatchers.IO) {
         repositoryNotes.updateTrash(id, trash)
     }
+    fun delete(note: TextNote) = viewModelScope.launch(Dispatchers.IO) {
+        repositoryNotes.delete(note)
+    }
     fun insert(note: CrossNote) = viewModelScope.launch(Dispatchers.IO) {
         repositoryCrossNotes.insert(note)
     }
@@ -71,6 +74,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     }
     fun updateTrashCrossNote(id: Long, trash: Boolean) = viewModelScope.launch(Dispatchers.IO) {
         repositoryCrossNotes.updateTrash(id, trash)
+    }
+    fun delete(note: CrossNote) = viewModelScope.launch(Dispatchers.IO) {
+
+        repositoryCrossNotes.delete(note)
     }
     fun insert(note: Folder) = viewModelScope.launch(Dispatchers.IO) {
         repositoryFolders.insert(note)

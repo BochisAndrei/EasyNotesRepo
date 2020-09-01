@@ -21,7 +21,7 @@ interface CrossNoteDao {
     @Query("SELECT * from cross_note_table WHERE trash = 0 ORDER BY cross_note_id ASC")
     fun getOrderedCrossNotes(): LiveData<List<CrossNote>>
 
-    @Query("SELECT * from cross_note_table WHERE favorite = 1 ORDER BY cross_note_id ASC")
+    @Query("SELECT * from cross_note_table WHERE favorite = 1 AND trash = 0 ORDER BY cross_note_id ASC")
     fun getOrderedFavoriteCrossNotes(): LiveData<List<CrossNote>>
 
     @Query("SELECT * from cross_note_table WHERE trash = 1 ORDER BY cross_note_id ASC")

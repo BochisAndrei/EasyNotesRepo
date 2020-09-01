@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,10 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.packg.easynotes.Activitys.CrossNoteActivity
 import com.packg.easynotes.Activitys.OnItemClickListener
 import com.packg.easynotes.Activitys.TextNoteActivity
+import com.packg.easynotes.Dialogs.DialogFragmentElementDetails
 import com.packg.easynotes.Elements.*
 import com.packg.easynotes.MainActivity.MainActivity
 import com.packg.easynotes.R
 import com.packg.easynotes.RoomDatabase.NoteViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FragmentFavoriteNotes : Fragment(), OnItemClickListener {
 
@@ -90,8 +92,40 @@ class FragmentFavoriteNotes : Fragment(), OnItemClickListener {
     }
 
     override fun onLongItemClick(note: Element?) {
-        TODO("Not yet implemented")
+        val dialog = DialogFragmentElementDetails()
+        val calendar: Calendar = Calendar.getInstance()
+        val args = Bundle()
+        val dateformat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        when (note) {
+            is TextNote -> {
+                args.putString("type", "textnote")
+                args.putString("ID", note.id.toString())
+                calendar.timeInMillis = note?.createDate!!.timeInMillis
+                val createTime = dateformat.format(calendar.time)
+                args.putString("creation", createTime)
+                calendar.timeInMillis = note.editedDate.timeInMillis
+                val editedTime = dateformat.format(calendar.time)
+                args.putString("edited", editedTime)
+                args.putString("favorite", note.favorite.toString())
+                dialog.arguments = args
+                dialog.show(requireActivity().supportFragmentManager, "ElementsDialogDetails")
+            }
+            is CrossNote -> {
+                args.putString("type", "crossnote")
+                args.putString("ID", note.id.toString())
+                calendar.timeInMillis = note?.createDate!!.timeInMillis
+                val createTime = dateformat.format(calendar.time)
+                args.putString("creation", createTime)
+                calendar.timeInMillis = note.editedDate.timeInMillis
+                val editedTime = dateformat.format(calendar.time)
+                args.putString("edited", editedTime)
+                args.putString("favorite", note.favorite.toString())
+                dialog.arguments = args
+                dialog.show(requireActivity().supportFragmentManager, "ElementsDialogDetails")
+            }
+        }
     }
+
 
 
 }

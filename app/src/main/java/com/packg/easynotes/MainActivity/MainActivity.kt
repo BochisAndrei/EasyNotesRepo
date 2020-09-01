@@ -1,11 +1,8 @@
 package com.packg.easynotes.MainActivity
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -20,16 +17,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.packg.easynotes.Activitys.Login_layout
 import com.packg.easynotes.Activitys.Settings_layout
-import com.packg.easynotes.Activitys.TextNoteActivity
 import com.packg.easynotes.Animations.RevealAnimation
 import com.packg.easynotes.DrawerFragments.*
-import com.packg.easynotes.Elements.*
 import com.packg.easynotes.R
 import com.packg.easynotes.Singleton.DocumentManager
 import com.packg.easynotes.User
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
