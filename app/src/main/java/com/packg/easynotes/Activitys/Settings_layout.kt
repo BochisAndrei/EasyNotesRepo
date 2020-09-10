@@ -1,13 +1,15 @@
 package com.packg.easynotes.Activitys
 
+import android.R.attr
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.facebook.AccessToken
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
@@ -24,11 +26,13 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.settings_layout.*
 
+
 class Settings_layout : AppCompatActivity(), ISelectedData {
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private var sharedP = "SHARED_USER"
     lateinit var user_name: TextView
+    private val GALLERY_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,20 +51,25 @@ class Settings_layout : AppCompatActivity(), ISelectedData {
             .transform(CropCircleTransformation())
             .into(findViewById<ImageView>(R.id.account_settings_userImage))
 
-        val openDialogChangeDrawer = findViewById<TextView>(R.id.settings_layout_change_drawer)
-        openDialogChangeDrawer.setOnClickListener {
-            var dialog =
-                DialogFragmentChangeNavHeader()
-            dialog.show(supportFragmentManager, "Choose header style")
-        }
-
         val openChangeName = findViewById<TextView>(R.id.settings_layout_change_name)
+        val openDialogChangeDrawer = findViewById<TextView>(R.id.settings_layout_change_drawer)
+        val openPhotoPicker = findViewById<TextView>(R.id.settings_layout_change_image)
+
         openChangeName.setOnClickListener {
             var dialog = DialogFragmentChangeName()
             dialog.addListener(this)
             dialog.show(supportFragmentManager, "Change name")
         }
-
+        openDialogChangeDrawer.setOnClickListener {
+            var dialog =
+                DialogFragmentChangeNavHeader()
+            dialog.show(supportFragmentManager, "Choose header style")
+        }
+        openPhotoPicker.setOnClickListener {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST)
+        }
 
         settings_layout_toolbar_btnBack.setOnClickListener {
             var intent = Intent(this@Settings_layout, MainActivity::class.java)
@@ -102,6 +111,10 @@ class Settings_layout : AppCompatActivity(), ISelectedData {
 
     override fun onSelectedData(string: String?) {
         this.user_name.text = string
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }
